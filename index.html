@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quality Detail</title>
+  <style>
+    :root {
+      --primary-bg: #000;
+      --secondary-bg: #1a1a1a;
+      --accent: #ff3b30;
+      --text-color: #fff;
+      --text-muted: #ccc;
+      --rounded: 6px;
+      --transition: 0.3s ease-in-out;
+      --space-sm: 1em;
+      --space-md: 2em;
+      --toggle-size: 40px;
+      --toggle-thumb: 20px;
+      --width: 80%;
+    }
+    [data-theme='light'] {
+      --primary-bg: #fff;
+      --secondary-bg: #f5f5f7;
+      --text-color: #1d1d1f;
+      --text-muted: #6e6f70;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--primary-bg);
+      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: background var(--transition), color var(--transition);
+    }
+    .hidden { display: none !important; }
+    header {
+      padding: var(--space-md) 0;
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header img {
+      width: var(--width);
+      max-width: 300px;
+    }
+    .header-nav {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: center;
+      margin: var(--space-md) 0;
+    }
+    .header-nav a {
+      background: var(--accent);
+      color: var(--secondary-bg);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      text-decoration: none;
+      transition: opacity var(--transition);
+      cursor: pointer;
+    }
+    .header-nav a:hover { opacity: 0.85; }
+    .theme-toggle {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-md);
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .theme-toggle input { display: none; }
+    .theme-toggle .icon {
+      font-size: 1.2rem;
+      margin: 0 var(--space-sm);
+      transition: opacity var(--transition);
+    }
+    .theme-toggle .slider {
+      width: var(--toggle-size);
+      height: var(--toggle-thumb);
+      background: var(--text-muted);
+      border-radius: var(--toggle-thumb);
+      position: relative;
+      transition: background var(--transition);
+    }
+    .theme-toggle .slider::before {
+      content: '';
+      position: absolute;
+      width: var(--toggle-thumb);
+      height: var(--toggle-thumb);
+      background: var(--primary-bg);
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+      transition: transform var(--transition);
+    }
+    .theme-toggle input:checked ~ .slider { background: var(--accent); }
+    .theme-toggle input:checked ~ .slider::before { transform: translateX(calc(var(--toggle-size) - var(--toggle-thumb))); }
+    main { width: 100%; max-width: 600px; padding: var(--space-md); }
+    #back-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 1rem;
+      margin-bottom: var(--space-sm);
+      cursor: pointer;
+    }
+    h2 {
+      font-size: 1.75rem;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: var(--space-md);
+    }
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      align-items: center;
+    }
+    .option {
+      width: var(--width);
+      background: var(--secondary-bg);
+      color: var(--text-color);
+      padding: var(--space-md);
+      border: 1px solid var(--text-muted);
+      border-radius: var(--rounded);
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .option.active, .option:hover { border-color: var(--accent); }
+    .details-list {
+      width: var(--width);
+      margin: var(--space-sm) auto;
+      text-align: left;
+      list-style: disc inside;
+    }
+    #quote-btn {
+      display: block;
+      width: var(--width);
+      margin: var(--space-sm) auto 0;
+      background: var(--accent);
+      color: var(--secondary-bg);
+      padding: var(--space-sm);
+      border-radius: var(--rounded);
+      text-decoration: none;
+      font-weight: bold;
+      transition: opacity var(--transition);
+    }
+    #quote-btn:hover { opacity: 0.85; }
+  </style>
+</head>
+<body data-theme="dark">
+  <header>
+    <img src="Logo.jpg" alt="Logo">
+    <nav class="header-nav">
+      <a href="#" data-target="services">Services</a>
+      <a href="#" data-target="about">About Us</a>
+      <a href="#" data-target="contact">Contact Us</a>
+    </nav>
+    <label class="theme-toggle">
+      <input type="checkbox" id="themeSwitch">
+      <span class="icon">🌙</span>
+      <span class="slider"></span>
+      <span class="icon">☀️</span>
+    </label>
+  </header>
+  <main>
+    <section id="services">
+      <div id="vehicle-container">
+        <h2>Select Vehicle Type</h2>
+        <div class="options-list" id="vehicle-list"></div>
+      </div>
+      <div id="service-container" class="hidden">
+        <button id="back-btn">← Back</button>
+        <h2>Select Service</h2>
+        <div class="options-list" id="service-list"></div>
+        <ul class="details-list hidden" id="service-details"></ul>
+        <a id="quote-btn" class="hidden" href="https://form.jotform.com/251765765555167" target="_blank">Request Quote</a>
+      </div>
+    </section>
+    <section id="about" class="hidden">
+      <h2>About Us</h2>
+      <p>Welcome to Quality Detail, where we provide top-notch auto and boat detailing services tailored to your needs.</p>
+    </section>
+    <section id="contact" class="hidden">
+      <h2>Contact Us</h2>
+      <p>Email: info@qualitydetail.com</p>
+      <p>Phone: (123) 456-7890</p>
+    </section>
+  </main>
+  <script>
+    // Theme toggle logic
+    const toggle = document.getElementById('themeSwitch');
+    function applyTheme() {
+      const saved = localStorage.getItem('theme');
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      const theme = saved || (prefersLight ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+      toggle.checked = (theme === 'light');
+    }
+    toggle.addEventListener('change', () => {
+      const newTheme = toggle.checked ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+    applyTheme();
+
+    // Section navigation
+    const sections = document.querySelectorAll('main section');
+    document.querySelectorAll('.header-nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.dataset.target;
+        if (target === 'services') {
+          showVehicles();
+        } else {
+          sections.forEach(sec => {
+            sec.id === target ? sec.classList.remove('hidden') : sec.classList.add('hidden');
+          });
+        }
+      });
+    });
+
+    // Data
+    const vehicles = [
+      { key: 'car', label: 'Car' },
+      { key: 'boat', label: 'Boat' },
+      { key: 'other', label: 'Other (RV, Motorcycle, etc.)' }
+    ];
+    const services = {
+      car: ['Full Detail', 'Exterior Only', 'Interior Only'],
+      boat: ['Full Detail', 'Exterior Only', 'Interior Only'],
+      other: ['RV Exterior Wash', 'Motorcycle Polishing', 'Engine Bay Cleaning']
+    };
+    const detailsMap = {
+      car: {
+        'Full Detail': ['Wash with soap', 'Dry', 'Compound buff', 'Color correction', 'Wax', 'Optional tint'],
+        'Exterior Only': ['Wash with soap', 'Dry', 'Compound buff', 'Color correction', 'Wax'],
+        'Interior Only': ['Wash', 'Scrub', 'Spray-on wax protectant & shine']
+      },
+      boat: {
+        'Full Detail': ['Remove water spots', 'Wash with boat soap', 'Dry', 'Compound buff', 'Color correction', 'Wax'],
+        'Exterior Only': ['Remove water spots', 'Wash with boat soap', 'Dry', 'Compound buff', 'Color correction', 'Wax'],
+        'Interior Only': ['Vacuum', 'Wipe surfaces', 'Protectant & shine']
+      },
+      other: {
+        'RV Exterior Wash': ['Rinse surface', 'Wash with mild soap', 'Dry with soft cloth', 'Buff to shine', 'Wax'],
+        'Motorcycle Polishing': ['Clean surface', 'Apply polish', 'Buff to shine', 'Sealant spray'],
+        'Engine Bay Cleaning': ['Degrease engine surfaces', 'Rinse carefully', 'Dry and protect rubber/plastic parts']
+      }
+    };
+    let currentVehicle = null;
+
+    // Elements
+    const vehicleList = document.getElementById('vehicle-list');
+    const serviceContainer = document.getElementById('service-container');
+    const serviceList = document.getElementById('service-list');
+    const serviceDetails = document.getElementById('service-details');
+    const quoteBtn = document.getElementById('quote-btn');
+    const backBtn = document.getElementById('back-btn');
+
+    function renderList(container, items, isVehicle) {
+      container.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'option';
+        div.textContent = isVehicle ? item.label : item;
+        div.dataset.key = isVehicle ? item.key : item;
+        frag.appendChild(div);
+      });
+      container.appendChild(frag);
+    }
+
+    function showVehicles() {
+      renderList(vehicleList, vehicles, true);
+      serviceContainer.classList.add('hidden');
+      serviceDetails.classList.add('hidden');
+      quoteBtn.classList.add('hidden');
+      document.getElementById('vehicle-container').classList.remove('hidden');
+      sections.forEach(sec => sec.id === 'services' ? sec.classList.remove('hidden') : sec.classList.add('hidden'));
+    }
+
+    function showServices(type) {
+      currentVehicle = type;
+      renderList(serviceList, services[type], false);
+      document.getElementById('vehicle-container').classList.add('hidden');
+      serviceContainer.classList.remove('hidden');
+      serviceDetails.classList.add('hidden');
+      quoteBtn.classList.add('hidden');
+    }
+
+    vehicleList.addEventListener('click', e => {
+      if (e.target.classList.contains('option')) {
+        showServices(e.target.dataset.key);
+      }
+    });
+
+    backBtn.addEventListener('click', showVehicles);
+
+    serviceList.addEventListener('click', e => {
+      if (!e.target.classList.contains('option')) return;
+      serviceList.querySelectorAll('.option').forEach(o => o.classList.remove('active'));
+      e.target.classList.add('active');
+      const details = detailsMap[currentVehicle][e.target.dataset.key] || [];
+      serviceDetails.innerHTML = details.map(d => `<li>${d}</li>`).join('');
+      e.target.insertAdjacentElement('afterend', serviceDetails);
+      serviceDetails.classList.remove('hidden');
+      serviceDetails.insertAdjacentElement('afterend', quoteBtn);
+      quoteBtn.classList.remove('hidden');
+    });
+
+    // Initialize
+    showVehicles();
+  </script>
+</body>
+</html>
