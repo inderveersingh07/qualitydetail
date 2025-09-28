@@ -1,322 +1,1193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quality Detail</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quality Detail | Premium Automotive & Marine Detailing</title>
+  <meta name="description" content="Quality Detail delivers premium mobile detailing for cars, boats, and specialty vehicles across the Pacific Northwest." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary-bg: #000;
-      --secondary-bg: #1a1a1a;
-      --accent: #ff3b30;
-      --text-color: #fff;
-      --text-muted: #ccc;
-      --rounded: 6px;
-      --transition: 0.3s ease-in-out;
-      --space-sm: 1em;
-      --space-md: 2em;
-      --toggle-size: 40px;
-      --toggle-thumb: 20px;
-      --width: 80%;
+      --clr-primary: #ff4136;
+      --clr-primary-dark: #c92f27;
+      --clr-dark: #0f141b;
+      --clr-light: #ffffff;
+      --clr-muted: #6c7788;
+      --clr-surface: #111925;
+      --clr-surface-alt: #192231;
+      --gradient: linear-gradient(135deg, rgba(255, 65, 54, 0.15), rgba(17, 25, 37, 0.85));
+      --radius: 18px;
+      --shadow-lg: 0 25px 60px rgba(15, 20, 27, 0.25);
+      --shadow-md: 0 18px 35px rgba(15, 20, 27, 0.22);
+      --shadow-sm: 0 10px 25px rgba(15, 20, 27, 0.16);
+      --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --max-width: 1200px;
     }
-    [data-theme='light'] {
-      --primary-bg: #fff;
-      --secondary-bg: #f5f5f7;
-      --text-color: #1d1d1f;
-      --text-muted: #6e6f70;
-    }
-    body {
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: var(--primary-bg);
-      color: var(--text-color);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: background var(--transition), color var(--transition);
     }
-    .hidden { display: none !important; }
-    header {
-      padding: var(--space-md) 0;
-      position: relative;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+
+    body {
+      font-family: "Poppins", "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--clr-light);
+      background: #05080e;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-    header img {
-      width: var(--width);
-      max-width: 300px;
+
+    img {
+      max-width: 100%;
+      display: block;
     }
-    .header-nav {
-      display: flex;
-      gap: var(--space-sm);
-      justify-content: center;
-      margin: var(--space-md) 0;
-    }
-    .header-nav a {
-      background: var(--accent);
-      color: var(--secondary-bg);
-      padding: var(--space-sm) var(--space-md);
-      border-radius: var(--rounded);
+
+    a {
+      color: inherit;
       text-decoration: none;
-      transition: opacity var(--transition);
-      cursor: pointer;
     }
-    .header-nav a:hover { opacity: 0.85; }
-    .theme-toggle {
-      position: absolute;
-      top: var(--space-sm);
-      right: var(--space-md);
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-    }
-    .theme-toggle input { display: none; }
-    .theme-toggle .icon {
-      font-size: 1.2rem;
-      margin: 0 var(--space-sm);
-      transition: opacity var(--transition);
-    }
-    .theme-toggle .slider {
-      width: var(--toggle-size);
-      height: var(--toggle-thumb);
-      background: var(--text-muted);
-      border-radius: var(--toggle-thumb);
+
+    .page-wrapper {
+      overflow: hidden;
       position: relative;
-      transition: background var(--transition);
     }
-    .theme-toggle .slider::before {
-      content: '';
-      position: absolute;
-      width: var(--toggle-thumb);
-      height: var(--toggle-thumb);
-      background: var(--primary-bg);
-      border-radius: 50%;
+
+    header {
+      position: fixed;
       top: 0;
       left: 0;
-      transition: transform var(--transition);
+      width: 100%;
+      z-index: 1000;
+      background: rgba(5, 8, 14, 0.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .theme-toggle input:checked ~ .slider { background: var(--accent); }
-    .theme-toggle input:checked ~ .slider::before { transform: translateX(calc(var(--toggle-size) - var(--toggle-thumb))); }
-    main { width: 100%; max-width: 600px; padding: var(--space-md); }
-    #back-btn {
-      background: none;
-      border: none;
-      color: var(--accent);
-      font-size: 1rem;
-      margin-bottom: var(--space-sm);
-      cursor: pointer;
+
+    .container {
+      width: min(90%, var(--max-width));
+      margin: 0 auto;
     }
-    h2 {
-      font-size: 1.75rem;
-      border-bottom: 2px solid var(--accent);
-      margin-bottom: var(--space-md);
-    }
-    .options-list {
+
+    .nav-bar {
       display: flex;
-      flex-direction: column;
-      gap: var(--space-md);
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .brand img {
+      width: 58px;
+      height: 58px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .brand span {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    nav a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--clr-muted);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 100%;
+      height: 2px;
+      background: var(--clr-primary);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: var(--transition);
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--clr-light);
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.6rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--clr-primary);
+      color: var(--clr-light);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary:hover {
+      background: var(--clr-primary-dark);
+      transform: translateY(-3px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--clr-light);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--clr-primary);
+      color: var(--clr-primary);
+    }
+
+    .hero {
+      padding: 9rem 0 6rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      opacity: 0.32;
+      filter: saturate(1.2);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(5, 8, 14, 0.95) 0%, rgba(5, 8, 14, 0.5) 55%, rgba(5, 8, 14, 1) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      display: grid;
+      gap: 2.5rem;
+      align-items: center;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .hero-text h1 {
+      font-family: "Montserrat", sans-serif;
+      font-size: clamp(2.5rem, 5vw, 3.75rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      color: var(--clr-muted);
+      max-width: 32rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      gap: 0.75rem;
       align-items: center;
     }
-    .option {
-      width: var(--width);
-      background: var(--secondary-bg);
-      color: var(--text-color);
-      padding: var(--space-md);
-      border: 1px solid var(--text-muted);
-      border-radius: var(--rounded);
+
+    .hero-meta span {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .hero-card {
+      background: var(--clr-surface);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-lg);
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .hero-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .hero-card ul {
+      display: grid;
+      gap: 0.85rem;
+      list-style: none;
+      color: var(--clr-muted);
+      font-size: 0.95rem;
+    }
+
+    .hero-card li::before {
+      content: "\2713";
+      color: var(--clr-primary);
+      margin-right: 0.5rem;
+    }
+
+    section {
+      padding: 5.5rem 0;
+      position: relative;
+    }
+
+    section:nth-of-type(even) {
+      background: var(--clr-surface);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-title span {
+      color: var(--clr-primary);
+      font-size: 0.8rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .section-title h2 {
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      margin-top: 0.75rem;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .section-title p {
+      color: var(--clr-muted);
+      max-width: 540px;
+      margin: 0.75rem auto 0;
+    }
+
+    .services-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .service-card {
+      background: var(--clr-surface-alt);
+      padding: 2.25rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, rgba(255, 65, 54, 0.22), transparent 55%);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-card h3 {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-card p {
+      color: var(--clr-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card ul {
+      list-style: none;
+      display: grid;
+      gap: 0.75rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+
+    .service-card ul li::before {
+      content: "•";
+      margin-right: 0.5rem;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .metrics {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      margin-top: 3rem;
+    }
+
+    .metric {
+      padding: 2rem;
+      border-radius: var(--radius);
+      background: rgba(25, 34, 49, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+    }
+
+    .metric h3 {
+      font-size: 2.2rem;
+      font-family: "Montserrat", sans-serif;
+      margin-bottom: 0.3rem;
+      color: var(--clr-primary);
+    }
+
+    .metric span {
+      font-size: 0.9rem;
+      color: var(--clr-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .process-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .process-step {
+      background: var(--clr-surface-alt);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      counter-increment: step;
+    }
+
+    .process-step::before {
+      content: counter(step, decimal-leading-zero);
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.04);
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .process-step h3 {
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .process-step p {
+      color: var(--clr-muted);
+      font-size: 0.95rem;
+    }
+
+    .pricing-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .plan {
+      background: var(--clr-surface-alt);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .plan::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--gradient);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .plan:hover::before,
+    .plan.featured::before {
+      opacity: 1;
+    }
+
+    .plan.featured {
+      border-color: rgba(255, 65, 54, 0.6);
+      transform: translateY(-10px);
+    }
+
+    .plan h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1.25rem;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .plan .price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .plan .price span {
+      font-size: 0.9rem;
+      color: var(--clr-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .plan ul {
+      list-style: none;
+      display: grid;
+      gap: 0.65rem;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.9rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .plan ul li::before {
+      content: "\2713";
+      margin-right: 0.6rem;
+      color: var(--clr-primary);
+    }
+
+    .plan .btn {
+      width: 100%;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 1.25rem;
+      background: linear-gradient(180deg, transparent, rgba(5, 8, 14, 0.85));
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .testimonials {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .testimonial {
+      background: var(--clr-surface-alt);
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .testimonial::before {
+      content: "\201C";
+      position: absolute;
+      top: -1.5rem;
+      left: 1.25rem;
+      font-size: 5rem;
+      color: rgba(255, 255, 255, 0.05);
+      font-family: "Georgia", serif;
+    }
+
+    .testimonial p {
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .testimonial .author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .testimonial .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .contact-wrapper {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    form {
+      background: var(--clr-surface-alt);
+      padding: 2rem;
+      border-radius: var(--radius);
+      display: grid;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(5, 8, 14, 0.85);
+      color: var(--clr-light);
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(255, 65, 54, 0.45);
+      box-shadow: 0 0 0 4px rgba(255, 65, 54, 0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .contact-info {
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      background: linear-gradient(165deg, rgba(17, 25, 37, 0.95), rgba(5, 8, 14, 0.8));
+      display: grid;
+      gap: 1.75rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .contact-info h3 {
+      font-size: 1.3rem;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .contact-info p {
+      color: var(--clr-muted);
+      font-size: 0.95rem;
+    }
+
+    .contact-info ul {
+      list-style: none;
+      display: grid;
+      gap: 1.1rem;
+    }
+
+    .contact-info li {
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+    }
+
+    .contact-info li span {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 65, 54, 0.15);
+      display: grid;
+      place-items: center;
+      color: var(--clr-primary);
+      font-size: 1.1rem;
+    }
+
+    .cta {
+      background: radial-gradient(circle at top left, rgba(255, 65, 54, 0.12), transparent 45%),
+        linear-gradient(120deg, rgba(17, 25, 37, 0.95), rgba(5, 8, 14, 0.95));
+      border-radius: var(--radius);
+      padding: 3.5rem;
+      display: grid;
+      gap: 1.5rem;
+      align-items: center;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .cta h2 {
+      font-size: clamp(2rem, 4vw, 2.6rem);
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .cta p {
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 1rem;
+    }
+
+    footer {
+      padding: 2.5rem 0;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.85rem;
+      background: #05080e;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    footer nav {
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      gap: 1.5rem;
+    }
+
+    .mobile-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: transparent;
+      color: var(--clr-light);
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
       cursor: pointer;
-      transition: border-color var(--transition), background var(--transition);
     }
-    .option.active, .option:hover { border-color: var(--accent); }
-    .details-list {
-      width: var(--width);
-      margin: var(--space-sm) auto;
-      text-align: left;
-      list-style: disc inside;
+
+    @media (max-width: 880px) {
+      nav {
+        position: fixed;
+        inset: 0;
+        background: rgba(5, 8, 14, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        transform: translateY(-100%);
+        transition: var(--transition);
+        pointer-events: none;
+      }
+
+      nav.open {
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      nav a {
+        font-size: 1.3rem;
+      }
+
+      .nav-actions {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: inline-flex;
+      }
+
+      .hero {
+        padding-top: 8rem;
+      }
+
+      .hero-text p {
+        max-width: 100%;
+      }
+
+      .cta {
+        padding: 2.5rem;
+      }
     }
-    #quote-btn {
-      display: block;
-      width: var(--width);
-      margin: var(--space-sm) auto 0;
-      background: var(--accent);
-      color: var(--secondary-bg);
-      padding: var(--space-sm);
-      border-radius: var(--rounded);
-      text-decoration: none;
-      font-weight: bold;
-      transition: opacity var(--transition);
+
+    @media (max-width: 600px) {
+      .hero-meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-card {
+        padding: 1.8rem;
+      }
+
+      .metrics {
+        gap: 1rem;
+      }
+
+      .metric {
+        padding: 1.5rem;
+      }
+
+      .contact-info {
+        padding: 2rem;
+      }
     }
-    #quote-btn:hover { opacity: 0.85; }
   </style>
 </head>
-<body data-theme="dark">
-  <header>
-    <img src="Logo.jpg" alt="Logo">
-    <nav class="header-nav">
-      <a href="#" data-target="services">Services</a>
-      <a href="#" data-target="about">About Us</a>
-      <a href="#" data-target="contact">Contact Us</a>
-    </nav>
-    <label class="theme-toggle">
-      <input type="checkbox" id="themeSwitch">
-      <span class="icon">🌙</span>
-      <span class="slider"></span>
-      <span class="icon">☀️</span>
-    </label>
-  </header>
-  <main>
-    <section id="services">
-      <div id="vehicle-container">
-        <h2>Select Vehicle Type</h2>
-        <div class="options-list" id="vehicle-list"></div>
+<body>
+  <div class="page-wrapper">
+    <header>
+      <div class="container">
+        <div class="nav-bar">
+          <a href="#top" class="brand">
+            <img src="Logo.jpg" alt="Quality Detail logo" />
+            <span>Quality Detail</span>
+          </a>
+          <button class="mobile-toggle" aria-label="Toggle navigation" id="mobileToggle">☰</button>
+          <nav id="primaryNav">
+            <a href="#services" class="active">Services</a>
+            <a href="#process">Process</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <div class="nav-actions">
+            <a class="btn btn-outline" href="tel:+15035551234">Call 503.555.1234</a>
+            <a class="btn btn-primary" href="#contact">Request Quote</a>
+          </div>
+        </div>
       </div>
-      <div id="service-container" class="hidden">
-        <button id="back-btn">← Back</button>
-        <h2>Select Service</h2>
-        <div class="options-list" id="service-list"></div>
-        <ul class="details-list hidden" id="service-details"></ul>
-        <a id="quote-btn" class="hidden" href="https://form.jotform.com/251765765555167" target="_blank">Request Quote</a>
-      </div>
-    </section>
-    <section id="about" class="hidden">
-      <h2>About Us</h2>
-      <p>Welcome to Quality Detail, where we provide top-notch auto and boat detailing services tailored to your needs.</p>
-    </section>
-    <section id="contact" class="hidden">
-      <h2>Contact Us</h2>
-      <p>Email: info@qualitydetail.com</p>
-      <p>Phone: (123) 456-7890</p>
-    </section>
-  </main>
-  <script>
-    // Theme toggle logic
-    const toggle = document.getElementById('themeSwitch');
-    function applyTheme() {
-      const saved = localStorage.getItem('theme');
-      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-      const theme = saved || (prefersLight ? 'light' : 'dark');
-      document.documentElement.setAttribute('data-theme', theme);
-      toggle.checked = (theme === 'light');
-    }
-    toggle.addEventListener('change', () => {
-      const newTheme = toggle.checked ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-    });
-    applyTheme();
+    </header>
 
-    // Section navigation
-    const sections = document.querySelectorAll('main section');
-    document.querySelectorAll('.header-nav a').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const target = link.dataset.target;
-        if (target === 'services') {
-          showVehicles();
-        } else {
-          sections.forEach(sec => {
-            sec.id === target ? sec.classList.remove('hidden') : sec.classList.add('hidden');
-          });
+    <main id="top">
+      <section class="hero" id="hero">
+        <div class="container">
+          <div class="hero-content">
+            <div class="hero-text">
+              <h1>Concierge Detailing for Cars, Boats &amp; Specialty Vehicles</h1>
+              <p>
+                Quality Detail delivers show-stopping finishes with uncompromising protection. From ceramic coatings to luxury interior restoration, our certified team travels to your driveway, marina, or hangar anywhere in the Pacific Northwest.
+              </p>
+              <div class="hero-meta">
+                <div class="hero-meta-item">
+                  <strong>24hr Response</strong>
+                  <span>Guaranteed booking confirmation</span>
+                </div>
+                <div class="hero-meta-item">
+                  <strong>Certified Pros</strong>
+                  <span>IDA, Flex &amp; IGL accredited</span>
+                </div>
+              </div>
+              <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a class="btn btn-primary" href="#contact">Book a Consultation</a>
+                <a class="btn btn-outline" href="#portfolio">View Our Work</a>
+              </div>
+            </div>
+            <div class="hero-card">
+              <h3>Signature Packages</h3>
+              <ul>
+                <li>Hand wash, clay bar &amp; paint decontamination</li>
+                <li>Two-stage machine polish &amp; ceramic sealant</li>
+                <li>Steam-cleaned interiors with leather conditioning</li>
+                <li>Marine oxidation removal &amp; gelcoat restoration</li>
+              </ul>
+              <a class="btn btn-primary" href="#pricing">Explore Packages</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="container">
+          <div class="section-title">
+            <span>What We Do</span>
+            <h2>Comprehensive Detailing Solutions</h2>
+            <p>We blend cutting-edge technology with meticulous craftsmanship to deliver finishes that surpass showroom quality.</p>
+          </div>
+          <div class="services-grid">
+            <article class="service-card">
+              <h3>Automotive Enhancement</h3>
+              <p>Perfect for daily drivers and exotic collections alike, tailored to your vehicle's paint system.</p>
+              <ul>
+                <li>Advanced paint correction</li>
+                <li>Self-healing ceramic coatings</li>
+                <li>Wheel &amp; brake decontamination</li>
+                <li>Interior reconditioning &amp; odor neutralization</li>
+              </ul>
+            </article>
+            <article class="service-card">
+              <h3>Marine Detailing</h3>
+              <p>Reclaim the luster of your vessel while protecting against salt, UV, and oxidation year-round.</p>
+              <ul>
+                <li>Gelcoat restoration &amp; polishing</li>
+                <li>Non-skid deck deep cleaning</li>
+                <li>Brightwork metal protection</li>
+                <li>Water-spot neutralization</li>
+              </ul>
+            </article>
+            <article class="service-card">
+              <h3>Specialty &amp; Fleet Care</h3>
+              <p>Custom maintenance plans for RVs, aircraft, commercial fleets, and high-performance toys.</p>
+              <ul>
+                <li>Protective film maintenance</li>
+                <li>Aircraft dry wash &amp; brightwork</li>
+                <li>Mobile fleet wash programs</li>
+                <li>Event &amp; photo prep services</li>
+              </ul>
+            </article>
+            <article class="service-card">
+              <h3>Protection Packages</h3>
+              <p>Extend the life of every surface with premium products engineered for lasting brilliance.</p>
+              <ul>
+                <li>Interior ceramic &amp; fabric guard</li>
+                <li>Glass graphene coatings</li>
+                <li>PPF inspection &amp; refresh</li>
+                <li>Seasonal maintenance plans</li>
+              </ul>
+            </article>
+          </div>
+          <div class="metrics">
+            <div class="metric">
+              <h3>1500+</h3>
+              <span>Vehicles Detailed</span>
+            </div>
+            <div class="metric">
+              <h3>98%</h3>
+              <span>Client Retention</span>
+            </div>
+            <div class="metric">
+              <h3>12</h3>
+              <span>Years of Experience</span>
+            </div>
+            <div class="metric">
+              <h3>24/7</h3>
+              <span>Mobile Availability</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="process">
+        <div class="container">
+          <div class="section-title">
+            <span>Our Method</span>
+            <h2>Luxury-Level Results in Four Steps</h2>
+            <p>Every project begins with a tailored evaluation to ensure the right products, tools, and timeline for your vehicle.</p>
+          </div>
+          <div class="process-grid">
+            <div class="process-step">
+              <h3>Consult &amp; Inspection</h3>
+              <p>We analyze paint depth, material condition, and environmental factors to build a personalized treatment plan.</p>
+            </div>
+            <div class="process-step">
+              <h3>Preparation &amp; Decontamination</h3>
+              <p>Snow foam pre-wash, multi-stage decon, masking, and surface prep deliver a pristine foundation.</p>
+            </div>
+            <div class="process-step">
+              <h3>Correction &amp; Enhancement</h3>
+              <p>Machine polishing, wet sanding, and interior restoration renew every surface to refined perfection.</p>
+            </div>
+            <div class="process-step">
+              <h3>Protection &amp; Maintenance</h3>
+              <p>Premium coatings, scheduled follow-ups, and aftercare coaching keep your investment protected.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing">
+        <div class="container">
+          <div class="section-title">
+            <span>Transparent Pricing</span>
+            <h2>Packages Crafted Around Your Vehicle</h2>
+            <p>Every project includes a complimentary inspection and customized aftercare plan.</p>
+          </div>
+          <div class="pricing-table">
+            <div class="plan">
+              <h3>Essentials Detail</h3>
+              <div class="price">$249<span>cars &amp; crossovers</span></div>
+              <ul>
+                <li>Two-bucket hand wash</li>
+                <li>Interior vacuum &amp; steam touchpoints</li>
+                <li>Single-stage polish &amp; sealant</li>
+                <li>Glass &amp; trim rejuvenation</li>
+              </ul>
+              <a class="btn btn-outline" href="#contact">Reserve Now</a>
+            </div>
+            <div class="plan featured">
+              <h3>Signature Correction</h3>
+              <div class="price">$549<span>luxury &amp; performance</span></div>
+              <ul>
+                <li>Comprehensive paint correction</li>
+                <li>Interior deep clean &amp; leather protection</li>
+                <li>2-year ceramic coating</li>
+                <li>Wheel &amp; caliper coating</li>
+              </ul>
+              <a class="btn btn-primary" href="#contact">Book Signature</a>
+            </div>
+            <div class="plan">
+              <h3>Marine Elite</h3>
+              <div class="price">$32<span>per linear foot</span></div>
+              <ul>
+                <li>Waterline oxidation removal</li>
+                <li>Topside polish &amp; UV guard</li>
+                <li>Non-skid &amp; vinyl deep clean</li>
+                <li>Engine bay &amp; compartment detail</li>
+              </ul>
+              <a class="btn btn-outline" href="#contact">Schedule Dockside</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio">
+        <div class="container">
+          <div class="section-title">
+            <span>Recent Work</span>
+            <h2>Detailing Transformations</h2>
+            <p>From supercars to sport fishers, our clients trust us to maintain the value and aesthetics of their investments.</p>
+          </div>
+          <div class="gallery-grid">
+            <figure class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=800&q=80" alt="Polished luxury car" />
+              <figcaption class="gallery-caption">Ferrari 488 Pista // Multilayer ceramic</figcaption>
+            </figure>
+            <figure class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1525104885119-8806dd94ad58?auto=format&fit=crop&w=800&q=80" alt="Boat detailing" />
+              <figcaption class="gallery-caption">52' Sea Ray Sundancer // Gelcoat revival</figcaption>
+            </figure>
+            <figure class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1503736334956-4e4c8e92946d?auto=format&fit=crop&w=800&q=80" alt="SUV detailing" />
+              <figcaption class="gallery-caption">Range Rover Autobiography // Interior renewal</figcaption>
+            </figure>
+            <figure class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1517359777477-0b049f72fb12?auto=format&fit=crop&w=800&q=80" alt="Motorcycle detailing" />
+              <figcaption class="gallery-caption">Harley-Davidson CVO // Chrome restoration</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="testimonials">
+        <div class="container">
+          <div class="section-title">
+            <span>Client Voices</span>
+            <h2>Trusted by Enthusiasts &amp; Collectors</h2>
+            <p>Our detailing programs are designed for clients who expect perfection. Here’s what they have to say.</p>
+          </div>
+          <div class="testimonials">
+            <div class="testimonial">
+              <p>“Quality Detail has elevated every vehicle in our collection. Their correction work rivals anything we’ve seen at Pebble Beach.”</p>
+              <div class="author">
+                <div class="avatar">JM</div>
+                <div>
+                  <strong>Jordan Miles</strong>
+                  <div style="color: var(--clr-muted); font-size: 0.85rem;">Owner, Cascade Motors</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial">
+              <p>“From my yacht to the company fleet, their team brings professionalism, punctuality, and impeccable finishes every time.”</p>
+              <div class="author">
+                <div class="avatar">LS</div>
+                <div>
+                  <strong>Lena Schmidt</strong>
+                  <div style="color: var(--clr-muted); font-size: 0.85rem;">COO, Pacific Charters</div>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial">
+              <p>“They restored our vintage Porsche 911 from dull to concours-ready. The aftercare plan keeps it looking flawless.”</p>
+              <div class="author">
+                <div class="avatar">AP</div>
+                <div>
+                  <strong>Alex Parker</strong>
+                  <div style="color: var(--clr-muted); font-size: 0.85rem;">Collector &amp; Enthusiast</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="cta">
+            <h2>Ready to Experience the Quality Detail Difference?</h2>
+            <p>
+              Tell us about your vehicle and your goals. We’ll craft a bespoke detailing roadmap and schedule your mobile appointment within 24 hours.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+              <a class="btn btn-primary" href="#contact">Request a Quote</a>
+              <a class="btn btn-outline" href="mailto:hello@qualitydetail.com">Email Our Team</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container">
+          <div class="section-title">
+            <span>Get in Touch</span>
+            <h2>Book Your Mobile Detailing Experience</h2>
+            <p>Share a few details about your vehicle and desired services. Our concierge team will respond in less than one business day.</p>
+          </div>
+          <div class="contact-wrapper">
+            <form>
+              <div>
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Alex Morgan" required />
+              </div>
+              <div>
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="alex@email.com" required />
+              </div>
+              <div>
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="(503) 555-1234" required />
+              </div>
+              <div>
+                <label for="vehicle">Vehicle Type</label>
+                <select id="vehicle" name="vehicle">
+                  <option value="auto">Automobile</option>
+                  <option value="marine">Boat / Yacht</option>
+                  <option value="rv">RV / Camper</option>
+                  <option value="fleet">Fleet / Commercial</option>
+                  <option value="other">Other Specialty</option>
+                </select>
+              </div>
+              <div>
+                <label for="services">Desired Services</label>
+                <textarea id="services" name="services" placeholder="Tell us about the services you’re interested in..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+            </form>
+            <aside class="contact-info">
+              <h3>Concierge Support</h3>
+              <p>We operate throughout Portland, Seattle, and the surrounding coastal communities.</p>
+              <ul>
+                <li><span>📞</span> <a href="tel:+15035551234">(503) 555-1234</a></li>
+                <li><span>✉️</span> <a href="mailto:hello@qualitydetail.com">hello@qualitydetail.com</a></li>
+                <li><span>📍</span> Portland &amp; Seattle Metro</li>
+                <li><span>⏰</span> Monday – Saturday, 7am – 7pm</li>
+              </ul>
+              <p style="color: rgba(255, 255, 255, 0.65); font-size: 0.9rem;">
+                Licensed, bonded, and fully insured. Ask about our private collection maintenance retainers.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <nav>
+          <a href="#services">Services</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <p>© <span id="year"></span> Quality Detail. All rights reserved. | Crafted with precision in the Pacific Northwest.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('#primaryNav a');
+    const sections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+
+    function activateLink() {
+      const scrollY = window.pageYOffset + 120;
+      sections.forEach((section, index) => {
+        if (scrollY >= section.offsetTop && scrollY < section.offsetTop + section.offsetHeight) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          navLinks[index].classList.add('active');
         }
       });
+    }
+
+    window.addEventListener('scroll', activateLink);
+    activateLink();
+
+    const mobileToggle = document.getElementById('mobileToggle');
+    const primaryNav = document.getElementById('primaryNav');
+
+    mobileToggle.addEventListener('click', () => {
+      primaryNav.classList.toggle('open');
     });
 
-    // Data
-    const vehicles = [
-      { key: 'car', label: 'Car' },
-      { key: 'boat', label: 'Boat' },
-      { key: 'other', label: 'Other (RV, Motorcycle, etc.)' }
-    ];
-    const services = {
-      car: ['Full Detail', 'Exterior Only', 'Interior Only'],
-      boat: ['Full Detail', 'Exterior Only', 'Interior Only'],
-      other: ['RV Exterior Wash', 'Motorcycle Polishing', 'Engine Bay Cleaning']
-    };
-    const detailsMap = {
-      car: {
-        'Full Detail': ['Wash with soap', 'Dry', 'Compound buff', 'Color correction', 'Wax', 'Optional tint'],
-        'Exterior Only': ['Wash with soap', 'Dry', 'Compound buff', 'Color correction', 'Wax'],
-        'Interior Only': ['Wash', 'Scrub', 'Spray-on wax protectant & shine']
-      },
-      boat: {
-        'Full Detail': ['Remove water spots', 'Wash with boat soap', 'Dry', 'Compound buff', 'Color correction', 'Wax'],
-        'Exterior Only': ['Remove water spots', 'Wash with boat soap', 'Dry', 'Compound buff', 'Color correction', 'Wax'],
-        'Interior Only': ['Vacuum', 'Wipe surfaces', 'Protectant & shine']
-      },
-      other: {
-        'RV Exterior Wash': ['Rinse surface', 'Wash with mild soap', 'Dry with soft cloth', 'Buff to shine', 'Wax'],
-        'Motorcycle Polishing': ['Clean surface', 'Apply polish', 'Buff to shine', 'Sealant spray'],
-        'Engine Bay Cleaning': ['Degrease engine surfaces', 'Rinse carefully', 'Dry and protect rubber/plastic parts']
-      }
-    };
-    let currentVehicle = null;
-
-    // Elements
-    const vehicleList = document.getElementById('vehicle-list');
-    const serviceContainer = document.getElementById('service-container');
-    const serviceList = document.getElementById('service-list');
-    const serviceDetails = document.getElementById('service-details');
-    const quoteBtn = document.getElementById('quote-btn');
-    const backBtn = document.getElementById('back-btn');
-
-    function renderList(container, items, isVehicle) {
-      container.innerHTML = '';
-      const frag = document.createDocumentFragment();
-      items.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'option';
-        div.textContent = isVehicle ? item.label : item;
-        div.dataset.key = isVehicle ? item.key : item;
-        frag.appendChild(div);
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        primaryNav.classList.remove('open');
       });
-      container.appendChild(frag);
-    }
-
-    function showVehicles() {
-      renderList(vehicleList, vehicles, true);
-      serviceContainer.classList.add('hidden');
-      serviceDetails.classList.add('hidden');
-      quoteBtn.classList.add('hidden');
-      document.getElementById('vehicle-container').classList.remove('hidden');
-      sections.forEach(sec => sec.id === 'services' ? sec.classList.remove('hidden') : sec.classList.add('hidden'));
-    }
-
-    function showServices(type) {
-      currentVehicle = type;
-      renderList(serviceList, services[type], false);
-      document.getElementById('vehicle-container').classList.add('hidden');
-      serviceContainer.classList.remove('hidden');
-      serviceDetails.classList.add('hidden');
-      quoteBtn.classList.add('hidden');
-    }
-
-    vehicleList.addEventListener('click', e => {
-      if (e.target.classList.contains('option')) {
-        showServices(e.target.dataset.key);
-      }
     });
 
-    backBtn.addEventListener('click', showVehicles);
-
-    serviceList.addEventListener('click', e => {
-      if (!e.target.classList.contains('option')) return;
-      serviceList.querySelectorAll('.option').forEach(o => o.classList.remove('active'));
-      e.target.classList.add('active');
-      const details = detailsMap[currentVehicle][e.target.dataset.key] || [];
-      serviceDetails.innerHTML = details.map(d => `<li>${d}</li>`).join('');
-      e.target.insertAdjacentElement('afterend', serviceDetails);
-      serviceDetails.classList.remove('hidden');
-      serviceDetails.insertAdjacentElement('afterend', quoteBtn);
-      quoteBtn.classList.remove('hidden');
-    });
-
-    // Initialize
-    showVehicles();
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
